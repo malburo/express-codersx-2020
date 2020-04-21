@@ -3,6 +3,8 @@ const app = express();
 const bodyParser = require('body-parser')
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
+const shortid = require('shortid');
+ 
 
 const adapter = new FileSync('db.json')
 const db = low(adapter)
@@ -36,8 +38,15 @@ app.get('/todos', (req, res) => {
 });
 
 app.post('/todos/create', (req,res) => {
+  req.body.id = shortid.generate();
   db.get('todos').push(req.body).write();
   res.redirect('/todos')
+})
+
+app.get('/todos/:id/delete', function (req, res) {
+  let id = req.params.id;
+  db.get('todos').remove({ id: id }).write()
+  res.redirect('/todos');
 })
 // listen for requests :)
 app.listen(process.env.PORT, () => {
