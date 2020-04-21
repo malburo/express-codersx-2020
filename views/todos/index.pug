@@ -1,0 +1,10 @@
+h1 Todos
+form(action="/todos", method="GET")
+  input(name="q", type="text")
+  button search
+form(action="/todos/create", method="POST")
+  input(name="content", type="text")
+  button create
+each todo in todos 
+  ul
+    li= todo.content
