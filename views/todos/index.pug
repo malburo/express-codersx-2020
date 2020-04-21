@@ -7,4 +7,7 @@ form(action="/todos/create", method="POST")
   button create
 each todo in todos 
   ul
-    li= todo.content
+    li
+      span= todo.content
+      span &nbsp                                   
+      a(href="/todos/" + todo.id + "/delete" label="delete") Delete           
